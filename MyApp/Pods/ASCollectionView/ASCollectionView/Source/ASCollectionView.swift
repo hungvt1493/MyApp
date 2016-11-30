@@ -70,8 +70,6 @@ public protocol ASCollectionViewDelegate: UICollectionViewDelegate {
   *  @param collectionView The collection view using this delegate.
 */
 @objc optional func loadMoreInASCollectionView(_ asCollectionView: ASCollectionView)
-    
-@objc optional func didTapCellAt(index: Int)
 }
 
 open class ASCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -175,14 +173,6 @@ open class ASCollectionView: UICollectionView, UICollectionViewDataSource, UICol
                 
                 collectionViewCell.setMaxParallaxOffset(collectionViewLayout.maxParallaxOffset)
                 collectionViewCell.setCurrentOrienration(collectionViewLayout.currentOrientation)
-                
-                collectionViewCell.isUserInteractionEnabled = true
-                collectionViewCell.tag = indexPath.row
-                let tap = UITapGestureRecognizer()
-                tap.numberOfTapsRequired = 1
-                tap.numberOfTouchesRequired = 1
-                tap.addTarget(self, action: #selector(cellDidTap(cell:)))
-                
                 return collectionViewCell
             }
         }
@@ -219,17 +209,6 @@ open class ASCollectionView: UICollectionView, UICollectionViewDataSource, UICol
             assertionFailure("Unsupported view supplementary element kind")
         }
         return reusableView!
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //
-    }
-    
-    func cellDidTap(cell: UITapGestureRecognizer) {
-        //        print("Did tap cell at index \(button.tag)")
-        if self.delegate!.conforms(to: ASCollectionViewDelegate.self) {
-            (self.delegate as! ASCollectionViewDelegate).didTapCellAt!(index: 0)
-        }
     }
     
     // MARK: Parallax Effects

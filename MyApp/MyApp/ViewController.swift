@@ -11,7 +11,7 @@ import CoreLocation
 import Alamofire
 import ASCollectionView
  
-class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate {
+class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var leftImgView: UIImageView!
@@ -21,7 +21,7 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     @IBOutlet weak var rightLabel: UILabel!
     @IBOutlet weak var collectionView: ASCollectionView!
 
-    private var scrollView: UIScrollView!
+//    private var scrollView: UIScrollView!
     private var headerLbl: UILabel!
     private var mask: UIView!
     private var content: UIView!
@@ -274,7 +274,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         return header
      }
     
-    
     func loadMoreInASCollectionView(_ asCollectionView: ASCollectionView) {
         if numberOfItems > 30 {
             collectionView.enableLoadMore = false
@@ -285,15 +284,10 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         collectionView.reloadData()
     }
     
-    func cellDidTap(cell: UITapGestureRecognizer) {
-//        print("Did tap cell at index \(button.tag)")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Did tap at index \(indexPath.row)")
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches {
-            //let location = touch.locationInView(yourScrollView)
-        }
-    }
+
 }
 
 

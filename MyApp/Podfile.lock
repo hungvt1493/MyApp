@@ -1,15 +1,18 @@
 PODS:
   - Alamofire (4.1.0)
   - ASCollectionView (1.0.3)
+  - SKPhotoBrowser (3.1.4)
 
 DEPENDENCIES:
   - Alamofire
   - ASCollectionView
+  - SKPhotoBrowser
 
 SPEC CHECKSUMS:
   Alamofire: e266cf991b933498df791e645e0d8ac294492153
   ASCollectionView: 497f14f716f463155a02b76429d5ef3dab31361b
+  SKPhotoBrowser: b3c9be2500d10a4c97979f07e45b1a520aec3b77
 
-PODFILE CHECKSUM: 336ce4b822c15a62afbe1b2bf9425e8d2ff06eac
+PODFILE CHECKSUM: 9a49f7dee613a4e4568e8c8a66642bcbef650fd7
 
 COCOAPODS: 1.1.1
