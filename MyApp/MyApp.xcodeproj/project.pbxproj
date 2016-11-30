@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2659959A1DEE9B6400B04B29 /* Header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265995991DEE9B6400B04B29 /* Header.xib */; };
 		266ED86D1DE2E22300B25A95 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ED86C1DE2E22300B25A95 /* Constants.swift */; };
 		26CECD941DE2A00900F2E1E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CECD931DE2A00900F2E1E4 /* AppDelegate.swift */; };
 		26CECD961DE2A00900F2E1E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CECD951DE2A00900F2E1E4 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		265995991DEE9B6400B04B29 /* Header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Header.xib; sourceTree = "<group>"; };
 		266ED86C1DE2E22300B25A95 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		26CECD901DE2A00900F2E1E4 /* MyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26CECD931DE2A00900F2E1E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		26CECD921DE2A00900F2E1E4 /* MyApp */ = {
 			isa = PBXGroup;
 			children = (
+				265995991DEE9B6400B04B29 /* Header.xib */,
 				26CECD931DE2A00900F2E1E4 /* AppDelegate.swift */,
 				266ED86C1DE2E22300B25A95 /* Constants.swift */,
 				26CECD951DE2A00900F2E1E4 /* ViewController.swift */,
@@ -289,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2659959A1DEE9B6400B04B29 /* Header.xib in Resources */,
 				26CECDA11DE2A00900F2E1E4 /* LaunchScreen.storyboard in Resources */,
 				26CECD9E1DE2A00900F2E1E4 /* Assets.xcassets in Resources */,
 				26CECD991DE2A00900F2E1E4 /* Main.storyboard in Resources */,
@@ -552,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -596,7 +600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

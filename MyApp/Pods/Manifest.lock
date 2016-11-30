@@ -1,12 +1,15 @@
 PODS:
   - Alamofire (4.1.0)
+  - ASCollectionView (1.0.3)
 
 DEPENDENCIES:
   - Alamofire
+  - ASCollectionView
 
 SPEC CHECKSUMS:
   Alamofire: e266cf991b933498df791e645e0d8ac294492153
+  ASCollectionView: 497f14f716f463155a02b76429d5ef3dab31361b
 
-PODFILE CHECKSUM: 54f01e2e16a5c2be15d769c457665e045b0b8934
+PODFILE CHECKSUM: 336ce4b822c15a62afbe1b2bf9425e8d2ff06eac
 
 COCOAPODS: 1.1.1
