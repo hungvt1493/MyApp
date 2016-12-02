@@ -1,18 +1,18 @@
 PODS:
   - Alamofire (4.1.0)
   - ASCollectionView (1.0.3)
-  - SKPhotoBrowser (3.1.4)
+  - ExpandingMenu (0.3.1)
 
 DEPENDENCIES:
   - Alamofire
   - ASCollectionView
-  - SKPhotoBrowser
+  - ExpandingMenu
 
 SPEC CHECKSUMS:
   Alamofire: e266cf991b933498df791e645e0d8ac294492153
   ASCollectionView: 497f14f716f463155a02b76429d5ef3dab31361b
-  SKPhotoBrowser: b3c9be2500d10a4c97979f07e45b1a520aec3b77
+  ExpandingMenu: 107548f3cb8c04b28a8b6b436983f506849484cc
 
-PODFILE CHECKSUM: 9a49f7dee613a4e4568e8c8a66642bcbef650fd7
+PODFILE CHECKSUM: a0c2067ea3192180f63a170d22ddc1f78c3dbef7
 
 COCOAPODS: 1.1.1

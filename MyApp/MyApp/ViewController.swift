@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreData
 import CoreLocation
 import Alamofire
 import ASCollectionView
+import ExpandingMenu
  
 class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate, UIScrollViewDelegate {
 
@@ -24,7 +26,7 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
 //    private var scrollView: UIScrollView!
     private var headerLbl: UILabel!
     private var mask: UIView!
-    private var content: UIView!
+//    private var content: UIView!
     
     private var screenWidth:CGFloat = 0.0
     private var screenHeight:CGFloat = 0.0
@@ -42,10 +44,19 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     let collectionElementKindHeader = "Header";
     let collectionElementKindMoreLoader = "MoreLoader";
     
+    var previewContents = Array<PreviewContent>()
+    
+    //
+    var events = [NSManagedObject]()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationController?.isNavigationBarHidden = true
+        
+        addData()
+        //getData()
         
         //Setup screen size
         let screenSize:CGRect = UIScreen.main.bounds
@@ -76,6 +87,10 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         self.navigationController?.isNavigationBarHidden = true
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -91,13 +106,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         view.addSubview(self.headerView)
         self.headerView.backgroundColor = UIColor.white
         
-        
-        //Scrollview
-//        scrollView = UIScrollView(frame: self.view.frame)
-//        scrollView!.showsVerticalScrollIndicator = false
-//        scrollView!.showsHorizontalScrollIndicator = false
-//        scrollView!.delegate = self
-//        view.addSubview(scrollView!)
         collectionView.register(UINib(nibName: collectionElementKindHeader, bundle: nil), forSupplementaryViewOfKind: collectionElementKindHeader, withReuseIdentifier: "header")
         collectionView.delegate = self
         collectionView.asDataSource = self
@@ -111,33 +119,116 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         collectionView!.addSubview(mask!)
         mask.backgroundColor = UIColor.blue
         mask.isHidden = true
-        
-        //Scrollable content
-        content = UIView(frame: CGRect(x: 0,y: 0, width: screenWidth, height: screenHeight * 2))
-        content!.backgroundColor = UIColor.lightGray
-        content.backgroundColor = UIColor.red
-        // Create some dummy content. 14 red bars that vertically fill the content container
-//        for i in 0..<14 {
-//            let bar = UILabel(frame: CGRect(x: 20, y: 0 + 52*i, width: Int(screenWidth - 40), height: 45))
-//            bar.text = "bar no. " + String(i+1)
-//            content!.addSubview(bar);
-//        }
-        
-//        mask!.addSubview(content!)
-        
+
         // Set scrollview size to 1.5x the screen height for this example
         collectionView!.contentSize = CGSize(width: screenWidth, height: (screenHeight * 2) + footerHeight)
         collectionView.backgroundColor = UIColor.black
+        
+        configureExpandingMenuButton()
     }
     
     func configHeaderContentView() {
-//        self.leftImgView.layer.cornerRadius = self.leftImgView.frame.size.width/2;
         self.leftImgView.layer.borderColor = UIColor.white.cgColor
         self.leftImgView.layer.borderWidth = 2
         
-//        self.rightImgView.layer.cornerRadius = self.leftImgView.frame.size.width/2;
         self.rightImgView.layer.borderColor = UIColor.white.cgColor
         self.rightImgView.layer.borderWidth = 2
+    }
+    
+    fileprivate func configureExpandingMenuButton() {
+        let menuButtonSize: CGSize = CGSize(width: 64.0, height: 64.0)
+        let menuButton = ExpandingMenuButton(frame: CGRect(origin: CGPoint.zero, size: menuButtonSize), centerImage: UIImage(named: "chooser-button-tab")!, centerHighlightedImage: UIImage(named: "chooser-button-tab-highlighted")!)
+        menuButton.center = CGPoint(x: self.view.bounds.width - 32.0, y: self.view.bounds.height - 72.0)
+        self.view.addSubview(menuButton)
+        
+        func showAlert(_ title: String) {
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        let item1 = ExpandingMenuItem(size: menuButtonSize, title: "Music", image: UIImage(named: "chooser-moment-icon-music")!, highlightedImage: UIImage(named: "chooser-moment-icon-place-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
+            showAlert("Music")
+        }
+        
+        let item2 = ExpandingMenuItem(size: menuButtonSize, title: "Place", image: UIImage(named: "chooser-moment-icon-place")!, highlightedImage: UIImage(named: "chooser-moment-icon-place-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
+            showAlert("Place")
+        }
+        
+        let item3 = ExpandingMenuItem(size: menuButtonSize, title: "Camera", image: UIImage(named: "chooser-moment-icon-camera")!, highlightedImage: UIImage(named: "chooser-moment-icon-camera-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
+            showAlert("Camera")
+        }
+        
+        let item4 = ExpandingMenuItem(size: menuButtonSize, title: "Thought", image: UIImage(named: "chooser-moment-icon-thought")!, highlightedImage: UIImage(named: "chooser-moment-icon-thought-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
+            showAlert("Thought")
+        }
+        
+        let item5 = ExpandingMenuItem(size: menuButtonSize, title: "Sleep", image: UIImage(named: "chooser-moment-icon-sleep")!, highlightedImage: UIImage(named: "chooser-moment-icon-sleep-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
+            showAlert("Sleep")
+        }
+        
+        menuButton.addMenuItems([item1, item2, item3, item4, item5])
+        
+        menuButton.willPresentMenuItems = { (menu) -> Void in
+            print("MenuItems will present.")
+        }
+        
+        menuButton.didDismissMenuItems = { (menu) -> Void in
+            print("MenuItems dismissed.")
+        }
+    }
+    
+    // MARK: Init data
+    func addData() {
+        
+        for i in 0..<30 {
+            let title = NSString(format: "Item %ld ", i) as String
+            let item = PreviewContent(image: UIImage(named: NSString(format: "image-%ld", i % 10) as String), date: "", title: title as NSString?)
+            previewContents.append(item)
+        }
+        
+        /*
+        if #available(iOS 10.0, *) {
+            let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            
+            for i in 0..<30 {
+                let entity =  NSEntityDescription.entity(forEntityName: "Event",
+                                                         in:managedContext)
+                
+                let event = NSManagedObject(entity: entity!,
+                                            insertInto: managedContext)
+                
+                let title = NSString(format: "Item %ld ", i) as String
+                let image = NSString(format: "image-%ld", i % 10) as String
+                
+                event.setValue(title, forKey: "title")
+                event.setValue(image, forKey: "image")
+                
+                do {
+                    try managedContext.save()
+                    events.append(event)
+                } catch let error as NSError  {
+                    print("Could not save \(error), \(error.userInfo)")
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }*/
+    }
+    
+    func getData() {
+        if #available(iOS 10.0, *) {
+            let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Event")
+            do {
+                let results =
+                    try managedContext.fetch(fetchRequest)
+                events = results as! [NSManagedObject]
+            } catch let error as NSError {
+                print("Could not fetch \(error), \(error.userInfo)")
+            }
+        }
     }
 
     // MARK: Scroll Delegate
@@ -163,21 +254,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         
         mask.frame = newMaskFrame
         
-        var newContentY:CGFloat
-        var newContentFrame:CGRect
-        
-        if offsetY < maskMaxTravellingDistance {
-            //Motion phase 1
-            newContentFrame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight * 1.5)
-            content!.frame = newContentFrame
-        } else {
-            //Motion phase 2
-            newContentY = maskMaxTravellingDistance - offsetY
-            newContentFrame = CGRect(x: 0, y: newContentY, width: screenWidth, height: screenHeight * 1.5)
-            content!.frame = newContentFrame
-        }
-        
-        
         //Moving the header
         var newHeaderFrame:CGRect
         var newHeaderY:CGFloat
@@ -192,7 +268,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
             self.headerView.frame = newHeaderFrame;
         }
     }
-
     
     // MARK: Location Manager Delegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -252,20 +327,24 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     // MARK: ASCollectionViewDataSource
     
     func numberOfItemsInASCollectionView(_ asCollectionView: ASCollectionView) -> Int {
-        return numberOfItems
+        return events.count//previewContents.count//numberOfItems
     }
     
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = asCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
-        gridCell.label.text = NSString(format: "Item %ld ", indexPath.row) as String
-        gridCell.imageView.image = UIImage(named: NSString(format: "image-%ld", indexPath.row % 10) as String)
+        let preview = previewContents[indexPath.row]
+        //let event = events[indexPath.row]
+        gridCell.label.text = preview.title as String?//event.value(forKey: "title") as? String
+        gridCell.imageView.image = preview.image//UIImage(named: (event.value(forKey: "image") as? String)!)
         return gridCell
     }
     
     func collectionView(_ asCollectionView: ASCollectionView, parallaxCellForItemAtIndexPath indexPath: IndexPath) -> ASCollectionViewParallaxCell {
         let parallaxCell = asCollectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
-        parallaxCell.label.text = NSString(format: "Item %ld ", indexPath.row) as String
-        parallaxCell.updateParallaxImage(UIImage(named: NSString(format: "image-%ld", indexPath.row % 10) as String)!)
+        let preview = previewContents[indexPath.row]
+        //let event = events[indexPath.row]
+        parallaxCell.label.text = preview.title as String?//event.value(forKey: "title") as? String
+        parallaxCell.updateParallaxImage(preview.image!)
         return parallaxCell
     }
     
@@ -284,11 +363,45 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         collectionView.reloadData()
     }
     
+    // MARK: CollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Did tap at index \(indexPath.row)")
     }
-
-}
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        
+        if (collectionView.indexPathsForSelectedItems?.count)! > 0 {
+            let indexPath = collectionView.indexPathsForSelectedItems?.first!
+            
+            let preview = previewContents[(indexPath?.row)!]
+            let imagePreviewCollectionVC = segue.destination as! ImagePreviewCollectionViewController
+            imagePreviewCollectionVC.previewContent = preview
+        }
+    }
+    
+    // MARK: Action
+    
+    @IBAction func createBtnTapped(_ sender: AnyObject) {
+        
+    }
+    
+    func savePreviewContent() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(previewContents, toFile: PreviewContent.ArchiveURL.path)
+        
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+    }
+    
+    func loadPreviewContent() -> [PreviewContent]? {
+        
+        return NSKeyedUnarchiver.unarchiveObject(withFile: PreviewContent.ArchiveURL.path) as? [PreviewContent]
+    }
+    
+ }
 
 
 

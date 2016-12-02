@@ -54,6 +54,7 @@
                                         <connections>
                                             <outlet property="imageView" destination="gEk-IZ-uHZ" id="0pP-DE-6t7"/>
                                             <outlet property="label" destination="38j-jx-ODR" id="RF8-8a-fS4"/>
+                                            <segue destination="Rn8-ab-bxM" kind="show" identifier="ShowDetail" id="X3v-ZY-bCP"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="parallaxCell" id="Qwd-LQ-DxR" customClass="ParallaxCell" customModule="MyApp" customModuleProvider="target">
@@ -78,6 +79,7 @@
                                         <size key="customSize" width="224" height="89"/>
                                         <connections>
                                             <outlet property="label" destination="l2R-TA-O2R" id="mhq-b4-f50"/>
+                                            <segue destination="Rn8-ab-bxM" kind="show" identifier="ShowDetail" id="Tcq-rD-MN3"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -163,6 +165,40 @@
             </objects>
             <point key="canvasLocation" x="1080.8" y="138.98050974512745"/>
         </scene>
+        <!--Preview-->
+        <scene sceneID="kWw-QO-fmf">
+            <objects>
+                <collectionViewController title="Preview" id="Rn8-ab-bxM" customClass="ImagePreviewCollectionViewController" customModule="MyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="0yb-YW-IGM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OQL-ms-xlr">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bbN-lA-R6Z">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Rn8-ab-bxM" id="xUp-u6-Ubp"/>
+                            <outlet property="delegate" destination="Rn8-ab-bxM" id="Lwg-yc-pS9"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oL0-ZF-hpB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1807" y="144"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="xGm-Lb-w4s">
             <objects>
@@ -182,4 +218,7 @@
             <point key="canvasLocation" x="141.59999999999999" y="138.98050974512745"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Tcq-rD-MN3"/>
+    </inferredMetricsTieBreakers>
 </document>
