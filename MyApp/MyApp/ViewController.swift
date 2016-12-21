@@ -12,8 +12,9 @@ import CoreLocation
 import Alamofire
 import ASCollectionView
 import ExpandingMenu
+import os.log
  
-class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate, UIScrollViewDelegate {
+class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate, UIScrollViewDelegate, AddEventViewControllerDelegate {
 
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var leftImgView: UIImageView!
@@ -45,9 +46,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     let collectionElementKindMoreLoader = "MoreLoader";
     
     var previewContents = Array<PreviewContent>()
-    
-    //
-    var events = [NSManagedObject]()
 
     
     override func viewDidLoad() {
@@ -56,7 +54,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         self.navigationController?.isNavigationBarHidden = true
         
         addData()
-        //getData()
         
         //Setup screen size
         let screenSize:CGRect = UIScreen.main.bounds
@@ -68,19 +65,21 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         
         initMainUI()
         configHeaderContentView()
+        configureExpandingMenuButton()
+        
         
         //Setup Location
         // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
+//        self.locationManager.requestAlwaysAuthorization()
+//        
+//        // For use in foreground
+//        self.locationManager.requestWhenInUseAuthorization()
+//        
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//            locationManager.startUpdatingLocation()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,8 +122,6 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         // Set scrollview size to 1.5x the screen height for this example
         collectionView!.contentSize = CGSize(width: screenWidth, height: (screenHeight * 2) + footerHeight)
         collectionView.backgroundColor = UIColor.black
-        
-        configureExpandingMenuButton()
     }
     
     func configHeaderContentView() {
@@ -148,7 +145,8 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         }
         
         let item1 = ExpandingMenuItem(size: menuButtonSize, title: "Music", image: UIImage(named: "chooser-moment-icon-music")!, highlightedImage: UIImage(named: "chooser-moment-icon-place-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
-            showAlert("Music")
+//            showAlert("Music")
+            self.addEvent()
         }
         
         let item2 = ExpandingMenuItem(size: menuButtonSize, title: "Place", image: UIImage(named: "chooser-moment-icon-place")!, highlightedImage: UIImage(named: "chooser-moment-icon-place-highlighted")!, backgroundImage: UIImage(named: "chooser-moment-button"), backgroundHighlightedImage: UIImage(named: "chooser-moment-button-highlighted")) { () -> Void in
@@ -178,55 +176,38 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         }
     }
     
-    // MARK: Init data
-    func addData() {
+    // MARK: Add new event
+    func addEvent() {
+        print("Do add new event...")
         
-        for i in 0..<30 {
-            let title = NSString(format: "Item %ld ", i) as String
-            let item = PreviewContent(image: UIImage(named: NSString(format: "image-%ld", i % 10) as String), date: "", title: title as NSString?)
-            previewContents.append(item)
-        }
-        
-        /*
-        if #available(iOS 10.0, *) {
-            let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            
-            for i in 0..<30 {
-                let entity =  NSEntityDescription.entity(forEntityName: "Event",
-                                                         in:managedContext)
-                
-                let event = NSManagedObject(entity: entity!,
-                                            insertInto: managedContext)
-                
-                let title = NSString(format: "Item %ld ", i) as String
-                let image = NSString(format: "image-%ld", i % 10) as String
-                
-                event.setValue(title, forKey: "title")
-                event.setValue(image, forKey: "image")
-                
-                do {
-                    try managedContext.save()
-                    events.append(event)
-                } catch let error as NSError  {
-                    print("Could not save \(error), \(error.userInfo)")
-                }
-            }
-        } else {
-            // Fallback on earlier versions
-        }*/
+        let addNewEventVC = self.storyboard?.instantiateViewController(withIdentifier: "AddEventViewController") as? AddEventViewController
+        addNewEventVC?.addNew = true
+        addNewEventVC?.delegate = self
+        addNewEventVC?.index = -1
+        let nav = UINavigationController(rootViewController:addNewEventVC!)
+        present(nav, animated: true, completion: nil)
     }
     
-    func getData() {
-        if #available(iOS 10.0, *) {
-            let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            
-            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Event")
-            do {
-                let results =
-                    try managedContext.fetch(fetchRequest)
-                events = results as! [NSManagedObject]
-            } catch let error as NSError {
-                print("Could not fetch \(error), \(error.userInfo)")
+    func didAddNewEvent(content: PreviewContent, addNew: Bool, index: NSInteger) {
+        if addNew {
+            previewContents.append(content)
+        } else {
+            previewContents[index] = content
+        }
+        
+        savePreviewContent()
+        collectionView.reloadData()
+    }
+    
+    // MARK: Init data
+    func addData() {
+        if let savedPreview = loadPreviewContent() {
+            previewContents += savedPreview
+        } else {
+            for i in 0..<30 {
+                let title = NSString(format: "Item %ld ", i) as String
+                let item = PreviewContent(image: UIImage(named: NSString(format: "image-%ld", i % 10) as String), date: "", title: title as NSString?)
+                previewContents.append(item)
             }
         }
     }
@@ -327,7 +308,7 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     // MARK: ASCollectionViewDataSource
     
     func numberOfItemsInASCollectionView(_ asCollectionView: ASCollectionView) -> Int {
-        return events.count//previewContents.count//numberOfItems
+        return previewContents.count//events.count//
     }
     
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
@@ -384,19 +365,16 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     
     // MARK: Action
     
-    @IBAction func createBtnTapped(_ sender: AnyObject) {
-        
-    }
-    
-    func savePreviewContent() {
+    private func savePreviewContent() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(previewContents, toFile: PreviewContent.ArchiveURL.path)
-        
-        if !isSuccessfulSave {
-            print("Failed to save meals...")
+        if isSuccessfulSave {
+            os_log("PreviewContent successfully saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("PreviewContent to save meals...", log: OSLog.default, type: .error)
         }
     }
     
-    func loadPreviewContent() -> [PreviewContent]? {
+    private func loadPreviewContent() -> [PreviewContent]? {
         
         return NSKeyedUnarchiver.unarchiveObject(withFile: PreviewContent.ArchiveURL.path) as? [PreviewContent]
     }

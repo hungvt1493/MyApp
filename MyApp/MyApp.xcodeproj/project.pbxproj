@@ -19,6 +19,7 @@
 		26CECDA11DE2A00900F2E1E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26CECD9F1DE2A00900F2E1E4 /* LaunchScreen.storyboard */; };
 		26CECDAC1DE2A00900F2E1E4 /* MyAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CECDAB1DE2A00900F2E1E4 /* MyAppTests.swift */; };
 		26CECDB71DE2A00900F2E1E4 /* MyAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CECDB61DE2A00900F2E1E4 /* MyAppUITests.swift */; };
+		26EE7EEE1E0A467A00D117E1 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EE7EED1E0A467A00D117E1 /* AddEventViewController.swift */; };
 		C75D206BA654D8F9B6538617 /* Pods_MyApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D307B580EA7052C6DC056BA /* Pods_MyApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		26CECDB21DE2A00900F2E1E4 /* MyAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26CECDB61DE2A00900F2E1E4 /* MyAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppUITests.swift; sourceTree = "<group>"; };
 		26CECDB81DE2A00900F2E1E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26EE7EED1E0A467A00D117E1 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		2D307B580EA7052C6DC056BA /* Pods_MyApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5920070BAE1A2126B0E2B95C /* Pods_MyAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB79E261F764074138188111 /* Pods-MyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyApp/Pods-MyApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				266ED86C1DE2E22300B25A95 /* Constants.swift */,
 				26CECD951DE2A00900F2E1E4 /* ViewController.swift */,
 				26BA4B311DF0387400765AD8 /* ImagePreviewCollectionViewController.swift */,
+				26EE7EED1E0A467A00D117E1 /* AddEventViewController.swift */,
 				26CECD971DE2A00900F2E1E4 /* Main.storyboard */,
 				26CECD9D1DE2A00900F2E1E4 /* Assets.xcassets */,
 				26CECD9F1DE2A00900F2E1E4 /* LaunchScreen.storyboard */,
@@ -368,6 +371,7 @@
 				26CECD9C1DE2A00900F2E1E4 /* MyApp.xcdatamodeld in Sources */,
 				26533E2C1DF1111100B7FF79 /* PreviewContent.swift in Sources */,
 				26CECD961DE2A00900F2E1E4 /* ViewController.swift in Sources */,
+				26EE7EEE1E0A467A00D117E1 /* AddEventViewController.swift in Sources */,
 				26CECD941DE2A00900F2E1E4 /* AppDelegate.swift in Sources */,
 				266ED86D1DE2E22300B25A95 /* Constants.swift in Sources */,
 			);

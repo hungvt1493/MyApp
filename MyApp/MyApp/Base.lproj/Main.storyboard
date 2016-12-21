@@ -39,6 +39,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
@@ -68,6 +69,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
@@ -165,6 +167,79 @@
             </objects>
             <point key="canvasLocation" x="1080.8" y="138.98050974512745"/>
         </scene>
+        <!--Add Event View Controller-->
+        <scene sceneID="5sh-ee-fyZ">
+            <objects>
+                <viewController storyboardIdentifier="AddEventViewController" id="x0g-85-1Kp" customClass="AddEventViewController" customModule="MyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Npa-K6-uRT"/>
+                        <viewControllerLayoutGuide type="bottom" id="mbO-Vn-paR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="toy-WX-cYg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8a5-Mc-D65">
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SjA-Jm-QUT">
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NkE-yT-7OP">
+                                <date key="date" timeIntervalSinceReferenceDate="503989662.24271297">
+                                    <!--2016-12-21 05:07:42 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="dateChanged:" destination="x0g-85-1Kp" eventType="valueChanged" id="FtA-OC-v43"/>
+                                </connections>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5TW-VW-wLE">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="VkY-lp-7mf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5TW-VW-wLE" firstAttribute="leading" secondItem="toy-WX-cYg" secondAttribute="leadingMargin" constant="37" id="7S0-gE-HaO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5TW-VW-wLE" secondAttribute="trailing" constant="37" id="IfL-hC-XuF"/>
+                            <constraint firstItem="SjA-Jm-QUT" firstAttribute="top" secondItem="8a5-Mc-D65" secondAttribute="bottom" constant="35" id="KFx-tE-NYC"/>
+                            <constraint firstItem="8a5-Mc-D65" firstAttribute="top" secondItem="Npa-K6-uRT" secondAttribute="bottom" constant="42" id="ScU-C5-ifK"/>
+                            <constraint firstItem="NkE-yT-7OP" firstAttribute="leading" secondItem="toy-WX-cYg" secondAttribute="leading" id="SvX-MO-Of9"/>
+                            <constraint firstItem="8a5-Mc-D65" firstAttribute="leading" secondItem="toy-WX-cYg" secondAttribute="leadingMargin" constant="51" id="Ubl-wZ-qtV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8a5-Mc-D65" secondAttribute="trailing" constant="52" id="UnZ-TA-nkJ"/>
+                            <constraint firstItem="5TW-VW-wLE" firstAttribute="top" secondItem="SjA-Jm-QUT" secondAttribute="bottom" constant="24" id="dUa-c1-7to"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SjA-Jm-QUT" secondAttribute="trailing" constant="38" id="iAl-Wd-oeU"/>
+                            <constraint firstItem="mbO-Vn-paR" firstAttribute="top" secondItem="NkE-yT-7OP" secondAttribute="bottom" id="lbI-Z6-B1H"/>
+                            <constraint firstItem="8a5-Mc-D65" firstAttribute="centerY" secondItem="toy-WX-cYg" secondAttribute="centerY" constant="-163.5" id="oJP-id-Waz"/>
+                            <constraint firstItem="SjA-Jm-QUT" firstAttribute="leading" secondItem="toy-WX-cYg" secondAttribute="leadingMargin" constant="37" id="oKF-L2-OMc"/>
+                            <constraint firstAttribute="trailing" secondItem="NkE-yT-7OP" secondAttribute="trailing" id="v42-J8-wHb"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ivk-uL-52W">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yJO-UC-4Ud"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="qG6-ZD-gQs">
+                            <connections>
+                                <action selector="doneBtnTapped:" destination="x0g-85-1Kp" id="meq-ip-ALn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dateLabel" destination="5TW-VW-wLE" id="sRn-rF-1j9"/>
+                        <outlet property="datePicker" destination="NkE-yT-7OP" id="uES-3g-jWN"/>
+                        <outlet property="imageView" destination="8a5-Mc-D65" id="Wkr-rm-Soa"/>
+                        <outlet property="titleTf" destination="SjA-Jm-QUT" id="0Wa-pV-GeI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aGS-As-reP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2016.8" y="810.94452773613204"/>
+        </scene>
         <!--Preview-->
         <scene sceneID="kWw-QO-fmf">
             <objects>
@@ -216,6 +291,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JmW-qi-wD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="141.59999999999999" y="138.98050974512745"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UEu-2t-jGh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m1i-l8-fBb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YMN-Yi-5Np">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="x0g-85-1Kp" kind="relationship" relationship="rootViewController" id="E1A-nt-qx6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AAS-oI-Lxr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1077.5999999999999" y="810.94452773613204"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
