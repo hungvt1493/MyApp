@@ -222,7 +222,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ivk-uL-52W">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yJO-UC-4Ud"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yJO-UC-4Ud">
+                            <connections>
+                                <action selector="cancelBtnTapped:" destination="x0g-85-1Kp" id="hsl-r9-mxg"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="qG6-ZD-gQs">
                             <connections>
                                 <action selector="doneBtnTapped:" destination="x0g-85-1Kp" id="meq-ip-ALn"/>
@@ -249,19 +253,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OQL-ms-xlr">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bbN-lA-R6Z">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="CellImage" id="2C2-yk-Ck6">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="51F-ph-dA1"/>
+                                    </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="51F-ph-dA1" firstAttribute="leading" secondItem="2C2-yk-Ck6" secondAttribute="leading" id="FR3-3b-Buk"/>
+                                    <constraint firstAttribute="bottom" secondItem="51F-ph-dA1" secondAttribute="bottom" id="Mz2-uD-15r"/>
+                                    <constraint firstAttribute="trailing" secondItem="51F-ph-dA1" secondAttribute="trailing" id="abQ-eE-m9p"/>
+                                    <constraint firstItem="51F-ph-dA1" firstAttribute="top" secondItem="2C2-yk-Ck6" secondAttribute="top" id="uGl-aw-7o5"/>
+                                </constraints>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellVideo" id="4x9-4T-Fqg">
+                                <rect key="frame" x="138" y="0.0" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uBv-IE-60M"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play" translatesAutoresizingMaskIntoConstraints="NO" id="at3-9G-qRz"/>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="at3-9G-qRz" secondAttribute="trailing" id="4p1-3d-pBG"/>
+                                    <constraint firstAttribute="bottom" secondItem="at3-9G-qRz" secondAttribute="bottom" id="Or0-bl-Ome"/>
+                                    <constraint firstItem="at3-9G-qRz" firstAttribute="top" secondItem="4x9-4T-Fqg" secondAttribute="top" id="Vuz-yN-5Hf"/>
+                                    <constraint firstAttribute="bottom" secondItem="uBv-IE-60M" secondAttribute="bottom" id="cZA-Ss-HEe"/>
+                                    <constraint firstItem="uBv-IE-60M" firstAttribute="top" secondItem="4x9-4T-Fqg" secondAttribute="top" id="l5J-7R-5Kv"/>
+                                    <constraint firstAttribute="trailing" secondItem="uBv-IE-60M" secondAttribute="trailing" id="nMs-TT-dsc"/>
+                                    <constraint firstItem="at3-9G-qRz" firstAttribute="leading" secondItem="4x9-4T-Fqg" secondAttribute="leading" id="nsl-Qh-eoh"/>
+                                    <constraint firstItem="uBv-IE-60M" firstAttribute="leading" secondItem="4x9-4T-Fqg" secondAttribute="leading" id="raA-1s-1Gc"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -311,6 +346,9 @@
             <point key="canvasLocation" x="1077.5999999999999" y="810.94452773613204"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Play" width="74" height="74"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Tcq-rD-MN3"/>
     </inferredMetricsTieBreakers>

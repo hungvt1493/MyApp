@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import DKImagePickerController
+import AVFoundation
+import AVKit
 
 private let reuseIdentifier = "Cell"
 
@@ -14,6 +17,7 @@ class ImagePreviewCollectionViewController: UICollectionViewController {
 
     // MARK: Properties
     var previewContent :PreviewContent?
+    var assets: [DKAsset]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +27,18 @@ class ImagePreviewCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        let viewFlow = UICollectionViewFlowLayout()
+        viewFlow.minimumLineSpacing = 1
+        viewFlow.minimumInteritemSpacing = 1
+        viewFlow.itemSize = CGSize(width: CGFloat((self.collectionView!.frame.size.width / 3)-2), height: CGFloat((self.collectionView!.frame.size.width / 3)-2))
+        self.collectionView!.collectionViewLayout = viewFlow
+        
         self.title = previewContent?.title as String?
         // Do any additional setup after loading the view.
+        
+        
+        let addBarButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(addNewBarButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem = addBarButton
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,6 +46,32 @@ class ImagePreviewCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    // MARK: Bar button action
+    func addNewBarButtonTapped(_ sender: UIBarButtonItem) {
+        let pickerController = DKImagePickerController()
+        pickerController.assetType = DKImagePickerControllerAssetType.allAssets
+        pickerController.singleSelect = false
+        
+        pickerController.didSelectAssets = { (assets: [DKAsset]) in
+            self.assets = assets
+            self.collectionView?.reloadData()
+        }
+        
+        self.present(pickerController, animated: true, completion: nil)
+    }
+    
+    func playVideo(_ asset: AVAsset) {
+        let avPlayerItem = AVPlayerItem(asset: asset)
+        
+        let avPlayer = AVPlayer(playerItem: avPlayerItem)
+        let player = AVPlayerViewController()
+        player.player = avPlayer
+        
+        avPlayer.play()
+        
+        self.present(player, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
@@ -47,23 +86,50 @@ class ImagePreviewCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        if self.assets != nil {
+            return (self.assets?.count)!
+        } else {
+            return 0
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
-        return cell
+        let asset = self.assets![indexPath.row]
+        var cell: UICollectionViewCell?
+        var imageView: UIImageView?
+        
+        if asset.isVideo {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellVideo", for: indexPath)
+            imageView = cell?.contentView.viewWithTag(1) as? UIImageView
+        } else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellImage", for: indexPath)
+            imageView = cell?.contentView.viewWithTag(1) as? UIImageView
+        }
+        
+        if let cell = cell, let imageView = imageView {
+            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            let tag = indexPath.row + 1
+            cell.tag = tag
+            asset.fetchImageWithSize(layout.itemSize.toPixel(), completeBlock: { image, info in
+                if cell.tag == tag {
+                    imageView.image = image
+                }
+            })
+        }
+        
+        return cell!
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: CGFloat((collectionView.frame.size.width / 3) - 20), height: CGFloat((collectionView.frame.size.width / 3) - 20))
+    }
+    
     // MARK: UICollectionViewDelegate
 
     /*

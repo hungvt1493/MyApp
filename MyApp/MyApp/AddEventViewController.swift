@@ -46,7 +46,6 @@ class AddEventViewController: UIViewController, UIImagePickerControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
     
-
     func selectImage() {
         print("Did tap image")
         let actionSheetController: UIAlertController = UIAlertController(title: "Please select", message: nil, preferredStyle: .actionSheet)
@@ -109,7 +108,6 @@ class AddEventViewController: UIViewController, UIImagePickerControllerDelegate,
          print("Dateobj: \(dateObj)")
         
         return dateObj as String;
-       
     }
     
     // MARK: Action
@@ -124,6 +122,9 @@ class AddEventViewController: UIViewController, UIImagePickerControllerDelegate,
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func cancelBtnTapped(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
+    }
     // MARK: TextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)

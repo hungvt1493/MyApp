@@ -9,6 +9,7 @@ pod 'Alamofire’
 #pod 'CKWaveCollectionViewTransition'
 pod 'ASCollectionView'
 pod 'ExpandingMenu'
+pod 'DKImagePickerController'
 #pod 'RealmSwift','2.1.2'
 #
 #post_install do |installer|

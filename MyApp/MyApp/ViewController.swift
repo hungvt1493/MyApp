@@ -368,9 +368,9 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     private func savePreviewContent() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(previewContents, toFile: PreviewContent.ArchiveURL.path)
         if isSuccessfulSave {
-            os_log("PreviewContent successfully saved.", log: OSLog.default, type: .debug)
+            //os_log("PreviewContent successfully saved.", log: OSLog.default, type: .debug)
         } else {
-            os_log("PreviewContent to save meals...", log: OSLog.default, type: .error)
+            //os_log("PreviewContent to save meals...", log: OSLog.default, type: .error)
         }
     }
     
