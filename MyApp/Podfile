@@ -10,6 +10,7 @@ pod 'Alamofire’
 pod 'ASCollectionView'
 pod 'ExpandingMenu'
 pod 'DKImagePickerController'
+pod 'FlexiCollectionViewLayout'
 #pod 'RealmSwift','2.1.2'
 #
 #post_install do |installer|

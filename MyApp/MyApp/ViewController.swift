@@ -12,7 +12,6 @@ import CoreLocation
 import Alamofire
 import ASCollectionView
 import ExpandingMenu
-import os.log
  
 class ViewController: UIViewController, ASCollectionViewDataSource, ASCollectionViewDelegate, UICollectionViewDelegate , CLLocationManagerDelegate, UIScrollViewDelegate, AddEventViewControllerDelegate {
 
@@ -54,6 +53,7 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
         self.navigationController?.isNavigationBarHidden = true
         
         addData()
+        
         
         //Setup screen size
         let screenSize:CGRect = UIScreen.main.bounds
@@ -203,13 +203,13 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     func addData() {
         if let savedPreview = loadPreviewContent() {
             previewContents += savedPreview
-        } else {
+        } /*else {
             for i in 0..<30 {
                 let title = NSString(format: "Item %ld ", i) as String
-                let item = PreviewContent(image: UIImage(named: NSString(format: "image-%ld", i % 10) as String), date: "", title: title as NSString?)
+                let item = PreviewContent(image: UIImage(named: NSString(format: "image-%ld", i % 10) as String), date: "", title: title as NSString?, folder: "")
                 previewContents.append(item)
             }
-        }
+        }*/
     }
 
     // MARK: Scroll Delegate
@@ -364,12 +364,13 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     }
     
     // MARK: Action
-    
     private func savePreviewContent() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(previewContents, toFile: PreviewContent.ArchiveURL.path)
         if isSuccessfulSave {
+            print("Saved")
             //os_log("PreviewContent successfully saved.", log: OSLog.default, type: .debug)
         } else {
+            print("Failed to save")
             //os_log("PreviewContent to save meals...", log: OSLog.default, type: .error)
         }
     }
@@ -380,8 +381,9 @@ class ViewController: UIViewController, ASCollectionViewDataSource, ASCollection
     }
     
  }
-
-
+ 
+ 
+ 
 
  class GridCell: UICollectionViewCell {
     

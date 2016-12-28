@@ -1,0 +1,6 @@
+framework module FlexiCollectionViewLayout {
+  umbrella header "FlexiCollectionViewLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

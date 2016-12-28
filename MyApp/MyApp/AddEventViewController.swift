@@ -116,7 +116,21 @@ class AddEventViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     @IBAction func doneBtnTapped(_ sender: Any) {
-        let previewContent = PreviewContent(image: imageView.image, date: dateLabel.text! as NSString, title: titleTf.text! as NSString)
+        let documentsDirectoryURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let currentTime = Date().timeIntervalSinceNow
+        //let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        //let documentsDirectory: AnyObject = paths[0]
+        let folderName = NSString(format: "folder%ld", currentTime) as String
+        let dataPath = documentsDirectoryURL.appending(NSString(format: "/folder%ld", currentTime) as String)
+        
+        do {
+            try FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: false, attributes: nil)
+        } catch let error as NSError {
+            print(error.localizedDescription);
+        }
+
+        
+        let previewContent = PreviewContent(image: imageView.image, date: dateLabel.text! as NSString, title: titleTf.text! as NSString, folder: folderName as NSString)
         delegate?.didAddNewEvent(content: previewContent, addNew: addNew, index: index!)
         
         dismiss(animated: true, completion: nil)

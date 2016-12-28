@@ -14,16 +14,17 @@ class PreviewContent: NSObject, NSCoding {
     var image: UIImage?
     var date: NSString?
     var title: NSString?
-    
+    var folder: NSString?
     // MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("previewContents")
     
     // MARK: Initialization
-    init(image: UIImage?, date: NSString?, title: NSString?) {
+    init(image: UIImage?, date: NSString?, title: NSString?, folder: NSString?) {
         self.image = image
         self.date = date
         self.title = title
+        self.folder = folder
         
         super.init()
     }
@@ -34,6 +35,7 @@ class PreviewContent: NSObject, NSCoding {
         static let imageKey = "image"
         static let dateKey = "date"
         static let titleKey = "title"
+        static let folderKey = "folder"
     }
     
     // MARK: NSCoding
@@ -41,13 +43,15 @@ class PreviewContent: NSObject, NSCoding {
         aCoder.encode(image, forKey: PropertyKey.imageKey)
         aCoder.encode(date, forKey: PropertyKey.dateKey)
         aCoder.encode(title, forKey: PropertyKey.titleKey)
+        aCoder.encode(folder, forKey: PropertyKey.folderKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         let image = aDecoder.decodeObject(forKey: PropertyKey.imageKey) as? UIImage
         let date = aDecoder.decodeObject(forKey: PropertyKey.dateKey) as? NSString
         let title = aDecoder.decodeObject(forKey: PropertyKey.titleKey) as? NSString
+        let folder = aDecoder.decodeObject(forKey: PropertyKey.folderKey) as? NSString
         
-        self.init(image: image, date: date, title: title)
+        self.init(image: image, date: date, title: title, folder: folder)
     }
 }
